@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">NontonKuy</string>
+    <string name="home">Home</string>
+    <string name="movie">Movie</string>
+    <string name="tv_series">TV Series</string>
+
+    <string name="movie_title">Movie Title</string>
+    <string name="release_year">Release Year</string>
+    <string name="movie_rating">Movie Rating</string>
+    <string name="movie_genres">Movie Genres</string>
+    <string name="series_title">Series Title</string>
+    <string name="series_year">Series Year</string>
+    <string name="series_rating">Series Rating</string>
+    <string name="series_genres">Series Genres</string>
+    <string name="series_episodes">Series Episodes</string>
+    <string name="series_description">Series Desc</string>
+
+    <string name="rating">Rating</string>
+    <string name="year">Release date</string>
+    <string name="episodes">Episodes</string>
+    <string name="movie_description">Movie Description</string>
+    <string name="description">Description</string>
+
+
+</resources>
