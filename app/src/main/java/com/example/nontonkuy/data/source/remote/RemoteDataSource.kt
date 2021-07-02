@@ -1,7 +1,10 @@
 package com.example.nontonkuy.data.source.remote
 
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.nontonkuy.api.ApiConfig
+import com.example.nontonkuy.data.source.remote.ApiResponse.*
 
 
 class RemoteDataSource () {
@@ -32,6 +35,33 @@ class RemoteDataSource () {
     suspend fun getTvShowById(id: Int): Series {
         return ApiConfig.getApiService().getTvShowById(id)
     }
+
+//    suspend fun getUpcomingMovies(): LiveData<ApiResponse<List<Movie>>> {
+//        val res = MutableLiveData<ApiResponse<List<Movie>>>()
+//        res.value = ApiResponse.success(ApiConfig.getApiService().getUpcomingMovies(PAGE).results)
+//        return res
+//    }
+//
+//    suspend fun getPopularTvShows(): LiveData<ApiResponse<List<Series>>> {
+//        val res = MutableLiveData<ApiResponse<List<Series>>>()
+//        res.value = ApiResponse.success(ApiConfig.getApiService().getPopularTvShows(PAGE).results)
+//        return res
+//    }
+//
+//    suspend fun getMovieById(id: Int): LiveData<ApiResponse<Movie>> {
+//        val res = MutableLiveData<ApiResponse<Movie>>()
+//        res.value = ApiResponse.success(ApiConfig.getApiService().getMovieById(id))
+//        return res
+//    }
+//
+//    suspend fun getTvShowById(id: Int): LiveData<ApiResponse<Series>> {
+//        val res = MutableLiveData<ApiResponse<Series>>()
+//        res.value = ApiResponse.success(ApiConfig.getApiService().getTvShowById(id))
+//        return res
+//    }
+
+
+
 
 
 }

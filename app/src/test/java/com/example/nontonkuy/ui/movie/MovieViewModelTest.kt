@@ -1,6 +1,5 @@
 package com.example.nontonkuy.ui.movie
 
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -35,11 +34,6 @@ class MovieViewModelTest {
     @Mock
     private lateinit var observer: Observer<List<Movie>>
 
-    @Before
-    fun setup() {
-        viewModel = MovieViewModel(repo)
-    }
-
     @ExperimentalCoroutinesApi
     @Test
     fun getUpcomingMovies() = mainCoroutineRule.runBlockingTest {
@@ -48,6 +42,7 @@ class MovieViewModelTest {
         movies.value = dummyMovies
 
         `when`(repo.getUpcomingMovies()).thenReturn(movies)
+        viewModel = MovieViewModel(repo)
         val movieEntities = viewModel.movies.value
         verify(repo).getUpcomingMovies()
         assertNotNull(movieEntities)
@@ -56,5 +51,4 @@ class MovieViewModelTest {
         viewModel.movies.observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
-
 }

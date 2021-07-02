@@ -1,4 +1,4 @@
-package com.example.nontonkuy.ui.series
+package com.example.nontonkuy.ui.favorite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,21 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nontonkuy.R
 import com.example.nontonkuy.data.source.remote.RemoteDataSource
 import com.example.nontonkuy.data.source.remote.Repository
+import com.example.nontonkuy.databinding.FragmentFavSeriesBinding
 import com.example.nontonkuy.databinding.FragmentSeriesBinding
+import com.example.nontonkuy.ui.series.SeriesAdapter
+import com.example.nontonkuy.ui.series.SeriesViewModel
 import com.example.nontonkuy.utils.EspressoIdlingResource
 import com.example.nontonkuy.viewmodel.ViewModelFactory
 
-class SeriesFragment : Fragment() {
 
-    private lateinit var fragmentSeriesBinding: FragmentSeriesBinding
+class FavSeriesFragment : Fragment() {
+
+    private lateinit var fragmentFavSeriesFragment: FragmentFavSeriesBinding
     private lateinit var repo: Repository
     private lateinit var dataSource: RemoteDataSource
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentSeriesBinding = FragmentSeriesBinding.inflate(inflater, container, false)
-        return fragmentSeriesBinding.root
+        fragmentFavSeriesFragment = FragmentFavSeriesBinding.inflate(inflater, container, false)
+        return fragmentFavSeriesFragment.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,21 +35,23 @@ class SeriesFragment : Fragment() {
             dataSource = RemoteDataSource()
             repo = Repository.getInstance(dataSource)
             val factory = ViewModelFactory.getInstance(requireActivity())
-            val viewModel = ViewModelProvider(this, factory)[SeriesViewModel::class.java]
-            val seriesAdapter = SeriesAdapter()
+            val viewModel = ViewModelProvider(this, factory)[FavSeriesViewModel::class.java]
+            val favSeriesAdapter = FavSeriesAdapter()
 
             viewModel.show.observe(viewLifecycleOwner, {
                 EspressoIdlingResource.increment()
-                seriesAdapter.setSeries(it)
-                seriesAdapter.notifyDataSetChanged()
+                favSeriesAdapter.setFavSeries(it)
+                favSeriesAdapter.notifyDataSetChanged()
                 EspressoIdlingResource.decrement()
             })
 
-            with(fragmentSeriesBinding.rvSeries) {
+            with(fragmentFavSeriesFragment.rvSeries) {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = seriesAdapter
+                adapter = favSeriesAdapter
             }
         }
     }
+
+
 }

@@ -11,14 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NontonKuy">
-        <activity android:name=".ui.home.HomeActivity"
-            android:label="Home"/>
+        <activity
+            android:name=".ui.favorite.FavoriteActivity"
+            android:label="Favorites"
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:theme="@style/Theme.NontonKuy.NoActionBar"/>
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:label="Home" />
         <activity
             android:name=".ui.detail.SeriesDetailActivity"
+            android:label="Detail TV Show"
             android:parentActivityName=".ui.home.HomeActivity"
             android:theme="@style/Theme.NontonKuy.NoActionBar" />
         <activity
             android:name=".ui.detail.MovieDetailActivity"
+            android:label="Detail Movie"
             android:parentActivityName=".ui.home.HomeActivity"
             android:theme="@style/Theme.NontonKuy.NoActionBar" />
         <activity android:name=".ui.SplashScreenActivity">

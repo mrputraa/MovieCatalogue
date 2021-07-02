@@ -1,9 +1,9 @@
 package com.example.nontonkuy.api
 
 import com.example.nontonkuy.data.source.remote.Movie
-import com.example.nontonkuy.data.source.remote.MovieResponse
+import com.example.nontonkuy.data.source.remote.response.MovieResponse
 import com.example.nontonkuy.data.source.remote.Series
-import com.example.nontonkuy.data.source.remote.SeriesResponse
+import com.example.nontonkuy.data.source.remote.response.SeriesResponse
 import com.example.nontonkuy.utils.Constants.API_KEY
 import retrofit2.http.*
 

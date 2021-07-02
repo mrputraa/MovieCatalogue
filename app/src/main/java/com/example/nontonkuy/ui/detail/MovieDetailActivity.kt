@@ -2,23 +2,22 @@ package com.example.nontonkuy.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.nontonkuy.R
-import com.example.nontonkuy.data.MovieEntity
 import com.example.nontonkuy.data.source.remote.Movie
 import com.example.nontonkuy.data.source.remote.RemoteDataSource
 import com.example.nontonkuy.data.source.remote.Repository
 import com.example.nontonkuy.databinding.ActivityMovieDetailBinding
 import com.example.nontonkuy.databinding.ContentDetailMovieBinding
-import com.example.nontonkuy.ui.movie.MovieViewModel
 import com.example.nontonkuy.utils.Constants.API_POSTER_PATH
 import com.example.nontonkuy.utils.EspressoIdlingResource
 import com.example.nontonkuy.viewmodel.DetailViewModelFactory
-import com.example.nontonkuy.viewmodel.ViewModelFactory
 
 class MovieDetailActivity : AppCompatActivity() {
 
@@ -67,6 +66,21 @@ class MovieDetailActivity : AppCompatActivity() {
             .error(R.drawable.ic_error)
             .into(detailMovieBinding.imagePoster)
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_detail, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_favorite -> {
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
