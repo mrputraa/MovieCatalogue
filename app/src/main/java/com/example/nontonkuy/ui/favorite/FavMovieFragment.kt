@@ -7,21 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nontonkuy.R
+import com.example.nontonkuy.data.source.local.LocalDataSource
 import com.example.nontonkuy.data.source.remote.RemoteDataSource
 import com.example.nontonkuy.data.source.remote.Repository
 import com.example.nontonkuy.databinding.FragmentFavMovieBinding
-import com.example.nontonkuy.databinding.FragmentMovieBinding
-import com.example.nontonkuy.ui.movie.MovieAdapter
-import com.example.nontonkuy.ui.movie.MovieViewModel
 import com.example.nontonkuy.utils.EspressoIdlingResource
 import com.example.nontonkuy.viewmodel.ViewModelFactory
+import com.example.nontonkuy.data.source.local.room.Dao
+import com.example.nontonkuy.data.source.local.room.NontonKuyDatabase
+import com.example.nontonkuy.utils.AppExecutors
 
 
 class FavMovieFragment : Fragment() {
     private lateinit var fragmentFavMovieBinding: FragmentFavMovieBinding
     private lateinit var repo: Repository
-    private lateinit var dataSource: RemoteDataSource
+    private lateinit var remoteDataSource: RemoteDataSource
+    private lateinit var localDataSource: LocalDataSource
+    private lateinit var appExecutors: AppExecutors
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentFavMovieBinding = FragmentFavMovieBinding.inflate(layoutInflater, container, false)
@@ -31,8 +33,9 @@ class FavMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            dataSource = RemoteDataSource()
-            repo = Repository.getInstance(dataSource)
+            remoteDataSource = RemoteDataSource()
+            localDataSource = LocalDataSource(NontonKuyDatabase.getInstance(requireActivity()).dao())
+            repo = Repository.getInstance(remoteDataSource, localDataSource, appExecutors)
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[FavMovieViewModel::class.java]
             val favMovieAdapter = FavMovieAdapter()

@@ -5,7 +5,7 @@ import com.example.nontonkuy.data.source.local.entity.MovieEntity
 import com.example.nontonkuy.data.source.local.entity.SeriesEntity
 import com.example.nontonkuy.data.source.local.room.Dao
 
-class LocalDataSource private constructor(private val mDao: Dao){
+class LocalDataSource(private val mDao: Dao){
 
     companion object {
         private var INSTANCE: LocalDataSource? = null
@@ -24,14 +24,14 @@ class LocalDataSource private constructor(private val mDao: Dao){
         movie.isFavorite = newState
         mDao.updateMovie(movie)
     }
-
     fun setTvShowAsFavorite(tvShow: SeriesEntity, newState: Boolean) {
         tvShow.isFavorite = newState
         mDao.updateTvShow(tvShow)
     }
-
     fun insertMovies(movies: List<MovieEntity>) = mDao.insertMovie(movies)
     fun insertTvShows(tvShows: List<SeriesEntity>) = mDao.insertTvShow(tvShows)
+
+
 
 
 }

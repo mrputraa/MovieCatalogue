@@ -11,7 +11,11 @@ class DetailMovieViewModel(val repo: Repository, val id: Int): ViewModel() {
     val movie = repo.getMovieById(id)
 
 
-    fun setMovieAsFavorite() {
-//        repo.setMovieAsFavorite()
+    suspend fun setMovieAsFavorite() {
+        val movieEntity = movie.value?.data
+        val newState = movieEntity?.isFavorite
+        if (newState != null) {
+            repo.setMovieAsFavorite(movieEntity, newState)
+        }
     }
 }

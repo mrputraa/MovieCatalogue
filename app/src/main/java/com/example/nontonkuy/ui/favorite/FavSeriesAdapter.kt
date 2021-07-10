@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.nontonkuy.R
+import com.example.nontonkuy.data.source.local.entity.SeriesEntity
 import com.example.nontonkuy.data.source.remote.Series
 import com.example.nontonkuy.databinding.ItemsSeriesBinding
 import com.example.nontonkuy.ui.detail.SeriesDetailActivity
@@ -14,22 +15,22 @@ import com.example.nontonkuy.utils.Constants
 
 class FavSeriesAdapter: RecyclerView.Adapter<FavSeriesAdapter.FavSeriesViewHolder>() {
 
-    private var listFavSeries = ArrayList<Series>()
+    private var listFavSeries = ArrayList<SeriesEntity>()
 
-    fun setFavSeries(series: List<Series>?) {
+    fun setFavSeries(series: List<SeriesEntity>?) {
         if (series == null) return
         this.listFavSeries.clear()
         this.listFavSeries.addAll(series)
     }
 
     class FavSeriesViewHolder(val binding: ItemsSeriesBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(series: Series) {
+        fun bind(series: SeriesEntity) {
             with(binding) {
                 tvItemSeriesTitle.text = series.original_name
                 tvItemSeriesRating.text = series.vote_average.toString()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, SeriesDetailActivity::class.java)
-                    intent.putExtra(SeriesDetailActivity.EXTRA_SERIES, series.id)
+                    intent.putExtra(SeriesDetailActivity.EXTRA_SERIES, series.seriesId)
                     itemView.context.startActivity(intent)
                 }
                 val url = "${Constants.API_POSTER_PATH}${series.poster_path}"

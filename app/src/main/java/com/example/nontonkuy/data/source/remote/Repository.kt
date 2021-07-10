@@ -216,7 +216,7 @@ class Repository private constructor(
                 }
 
             override fun saveCallResult(data: Series) {
-                TODO("Not yet implemented")
+                localDataSource
             }
 
         }.asLiveData()
@@ -234,8 +234,8 @@ class Repository private constructor(
 
 
     suspend fun setMovieAsFavorite(movie: MovieEntity, newState: Boolean) =
-        appExecutors.diskIO().execute { localDataSource.setMovieAsFavorite(movie, newState) }
+        localDataSource.setMovieAsFavorite(movie, newState)
 
     suspend fun setTvShowAsFavorite(tvShow: SeriesEntity, newState: Boolean) =
-        appExecutors.diskIO().execute { localDataSource.setTvShowAsFavorite(tvShow, newState) }
+        localDataSource.setTvShowAsFavorite(tvShow, newState)
 }
