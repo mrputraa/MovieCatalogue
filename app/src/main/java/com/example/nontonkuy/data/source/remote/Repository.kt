@@ -12,16 +12,15 @@ import com.example.nontonkuy.vo.Resource
 
 class Repository private constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val appExecutors: AppExecutors){
+    private val localDataSource: LocalDataSource){
 
     companion object {
         @Volatile
         private var instance: Repository? = null
 
-        fun getInstance(remoteData: RemoteDataSource, localData: LocalDataSource, appExecutors: AppExecutors): Repository =
+        fun getInstance(remoteData: RemoteDataSource, localData: LocalDataSource): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(remoteData, localData, appExecutors).apply { instance = this }
+                instance ?: Repository(remoteData, localData).apply { instance = this }
             }
     }
 
@@ -103,7 +102,7 @@ class Repository private constructor(
 
 
     fun getUpcomingMovies(): LiveData<Resource<List<MovieEntity>>> {
-        return object : NetworkBoundResource <List<MovieEntity>, List<Movie>>(appExecutors) {
+        return object : NetworkBoundResource <List<MovieEntity>, List<Movie>>() {
 
             override fun loadFromDB(): LiveData<List<MovieEntity>> =
                 localDataSource.getUpcomingMovies()
@@ -139,7 +138,7 @@ class Repository private constructor(
     }
 
     fun getPopularTvShows(): LiveData<Resource<List<SeriesEntity>>> {
-        return object : NetworkBoundResource <List<SeriesEntity>, List<Series>>(appExecutors) {
+        return object : NetworkBoundResource <List<SeriesEntity>, List<Series>>() {
 
             override fun loadFromDB(): LiveData<List<SeriesEntity>> =
                 localDataSource.getPopularTvShows()
@@ -176,7 +175,7 @@ class Repository private constructor(
     }
 
     fun getMovieById(id: Int): LiveData<Resource<MovieEntity>> {
-        return object : NetworkBoundResource<MovieEntity, Movie>(appExecutors) {
+        return object : NetworkBoundResource<MovieEntity, Movie>() {
             override fun loadFromDB(): LiveData<MovieEntity> =
                 localDataSource.getMovieById(id)
 
@@ -200,7 +199,7 @@ class Repository private constructor(
     }
 
     fun getTvShowById(id: Int): LiveData<Resource<SeriesEntity>> {
-        return object : NetworkBoundResource<SeriesEntity, Series>(appExecutors) {
+        return object : NetworkBoundResource<SeriesEntity, Series>() {
             override fun loadFromDB(): LiveData<SeriesEntity> =
                 localDataSource.getTvShowById(id)
 

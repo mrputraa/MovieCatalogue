@@ -24,7 +24,6 @@ class SeriesFragment : Fragment() {
     private lateinit var repo: Repository
     private lateinit var remoteDataSource: RemoteDataSource
     private lateinit var localDataSource: LocalDataSource
-    private lateinit var appExecutors: AppExecutors
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentSeriesBinding = FragmentSeriesBinding.inflate(inflater, container, false)
@@ -36,7 +35,7 @@ class SeriesFragment : Fragment() {
         if (activity != null) {
             remoteDataSource = RemoteDataSource()
             localDataSource = LocalDataSource(NontonKuyDatabase.getInstance(requireActivity()).dao())
-            repo = Repository.getInstance(remoteDataSource, localDataSource, appExecutors)
+            repo = Repository.getInstance(remoteDataSource, localDataSource)
             val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(this, factory)[SeriesViewModel::class.java]
             val seriesAdapter = SeriesAdapter()

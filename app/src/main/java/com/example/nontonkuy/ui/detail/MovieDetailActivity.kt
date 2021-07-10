@@ -37,7 +37,6 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var repo: Repository
     private lateinit var remoteDataSource: RemoteDataSource
     private lateinit var localDataSource: LocalDataSource
-    private lateinit var appExecutors: AppExecutors
     private var menu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +51,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         remoteDataSource = RemoteDataSource()
         localDataSource = LocalDataSource(NontonKuyDatabase.getInstance(this).dao())
-        repo = Repository.getInstance(remoteDataSource, localDataSource, appExecutors)
+        repo = Repository.getInstance(remoteDataSource, localDataSource)
 
         val extras = intent.extras
         if (extras != null) {

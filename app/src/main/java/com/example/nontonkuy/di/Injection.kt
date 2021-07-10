@@ -14,8 +14,7 @@ object Injection {
 
         val remoteDataSource = RemoteDataSource.getInstance()
         val localDataSource = LocalDataSource.getInstance(database.dao())
-        val appExecutors = AppExecutors()
 
-        return Repository.getInstance(remoteDataSource, localDataSource, appExecutors)
+        return Repository.getInstance(remoteDataSource, localDataSource)
     }
 }

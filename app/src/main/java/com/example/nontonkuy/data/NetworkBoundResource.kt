@@ -7,7 +7,7 @@ import com.example.nontonkuy.data.source.remote.StatusResponse
 import com.example.nontonkuy.utils.AppExecutors
 import com.example.nontonkuy.vo.Resource
 
-abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutor: AppExecutors) {
+abstract class NetworkBoundResource<ResultType, RequestType>() {
     private val result = MediatorLiveData<Resource<ResultType>>()
 
     init {
@@ -48,19 +48,17 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
             when (response.status) {
-                StatusResponse.SUCCESS ->
-                    mExecutor.diskIO().execute {
-                        saveCallResult(response.body)
-                        mExecutor.mainThread().execute {
-                            result.addSource(loadFromDB()) { newData ->
-                                result.value = Resource.success(newData)
-                            }
-                        }
-                    }
-                StatusResponse.EMPTY -> mExecutor.mainThread().execute {
+                StatusResponse.SUCCESS -> {
+                    saveCallResult(response.body)
                     result.addSource(loadFromDB()) { newData ->
                         result.value = Resource.success(newData)
                     }
+                }
+                StatusResponse.EMPTY -> {
+                    result.addSource(loadFromDB()) { newData ->
+                        result.value = Resource.success(newData)
+                    }
+
                 }
                 StatusResponse.ERROR -> {
                     onFetchFailed()
@@ -69,6 +67,29 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
                     }
                 }
             }
+
+//            when (response.status) {
+//                StatusResponse.SUCCESS ->
+//                    mExecutor.diskIO().execute {
+//                        saveCallResult(response.body)
+//                        mExecutor.mainThread().execute {
+//                            result.addSource(loadFromDB()) { newData ->
+//                                result.value = Resource.success(newData)
+//                            }
+//                        }
+//                    }
+//                StatusResponse.EMPTY -> mExecutor.mainThread().execute {
+//                    result.addSource(loadFromDB()) { newData ->
+//                        result.value = Resource.success(newData)
+//                    }
+//                }
+//                StatusResponse.ERROR -> {
+//                    onFetchFailed()
+//                    result.addSource(dbSource) { newData ->
+//                        result.value = Resource.error(response.message, newData)
+//                    }
+//                }
+//            }
         }
     }
 
